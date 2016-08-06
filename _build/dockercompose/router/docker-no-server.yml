@@ -9,6 +9,18 @@ services:
       - "8125/udp"
     environment:
       - "SERVICE_8125_NAME=statsd-8125"
+  web1:
+    image: nginx:alpine
+    volumes:
+      - "./web1:/usr/share/nginx/html"
+    ports:
+      - "::80"
+  web2:
+    image: nginx:alpine
+    volumes:
+      - "./web2:/usr/share/nginx/html"
+    ports:
+      - "::80"
   registrator:
     image: 'gliderlabs/registrator:latest'
     command: '-internal -tags=dev consul://consul:8500'
@@ -20,9 +32,3 @@ services:
     environment:
       - "SERVICE_514_NAME=syslog-514"
       - "SERVICE_TAGS=project1"
-  syslog:
-    image: 'factorish/syslog'
-    command: '-t udp'
-    environment:
-      - "SERVICE_514_NAME=syslog-514"
-      - "SERVICE_TAGS=project2"
