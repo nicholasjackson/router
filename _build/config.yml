@@ -1,0 +1,48 @@
+---
+application_name: 'router'
+namespace: 'github.com/nicholasjackson'
+generator_name: minke-generator-go
+docker_registry:
+  url: 
+  user: 
+  password: 
+  email: 
+  namespace: 
+docker:
+  build_image: 'golang:latest'
+  application_docker_file: './dockerfile/router/'
+  application_compose_file: './dockercompose/router/docker-compose.yml'
+fetch:
+  enabled: true
+test:
+  enabled: true
+build:
+  post:
+    copy:
+      -
+        from: '../router'
+        to: './dockerfile/router'
+      -
+        from: './swagger_spec/swagger.yml'
+        to: './dockerfile/router/swagger_spec'
+run:
+  consul_loader:
+    config_file: './consul_keys.yml'
+    url:
+      address: consul
+      port: 8500
+      type: bridge
+  docker:
+    application_compose_file: './dockercompose/router/docker-no-server.yml'
+cucumber:
+  consul_loader:
+    config_file: './consul_keys.yml'
+    url:
+      address: consul
+      port: 8500
+      type: bridge
+  health_check:
+    address: router
+    port: 8001
+    path: /v1/health
+    type: bridge
