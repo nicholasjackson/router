@@ -1,8 +1,10 @@
 # Go Service Router
 Simple service router written in Go and backed with Consul.
 
-Build Status: [![CircleCI](https://circleci.com/gh/nicholasjackson/router.svg?style=svg)](https://circleci.com/gh/nicholasjackson/router)  
-Stories Ready: [![Stories in Ready](https://badge.waffle.io/nicholasjackson/router.svg?label=ready&title=Ready)](http://waffle.io/nicholasjackson/router)  
+|    |    |
+|----|----|
+| Build Status | [![CircleCI](https://circleci.com/gh/nicholasjackson/router.svg?style=svg)](https://circleci.com/gh/nicholasjackson/router) |
+| Stories Ready | [![Stories in Ready](https://badge.waffle.io/nicholasjackson/router.svg?label=ready&title=Ready)](http://waffle.io/nicholasjackson/router) |
 
 Service router is an implementation of a service router built in Go, it can act as a proxy internally for your microservice environment and is designed to be fault tollerant and highly efficient.
 
