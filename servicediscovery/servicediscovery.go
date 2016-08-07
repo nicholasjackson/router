@@ -3,7 +3,7 @@ package servicediscovery
 import (
 	"time"
 
-	"github.com/acetio/api-data/logging"
+	"github.com/nicholasjackson/router/logging"
 	"github.com/nicholasjackson/router/utils"
 )
 
