@@ -9,21 +9,21 @@ import (
 	"testing"
 
 	"github.com/gorilla/context"
+	"github.com/nicholasjackson/router/logging"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/nicholasjackson/router/mocks"
 )
 
 type mockType struct {
 	FirstName string `json:"first_name" valid:"alphanum,stringlength(1|255),required"`
 }
 
-var mockHandler *mocks.MockHandler
-var mockRequestStatsD *mocks.MockStatsD
+var mockHandler *MockHandler
+var mockRequestStatsD *logging.MockStatsD
 
 func setupRequestValidationTests(t *testing.T) {
-	mockHandler = &mocks.MockHandler{}
-	mockRequestStatsD = &mocks.MockStatsD{}
+	mockHandler = &MockHandler{}
+	mockRequestStatsD = &logging.MockStatsD{}
 
 	mockRequestStatsD.Mock.On("Increment", mock.Anything)
 	mockHandler.Mock.On("ServeHTTP", mock.Anything, mock.Anything)

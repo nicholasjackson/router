@@ -2,25 +2,26 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"testing"
-	"log"
 	"os"
+	"testing"
+
 	"github.com/facebookgo/inject"
+	"github.com/nicholasjackson/router/logging"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/nicholasjackson/router/mocks"
 )
 
-var healthStatsDMock *mocks.MockStatsD
+var healthStatsDMock *logging.MockStatsD
 
 func healthTestSetup(t *testing.T) {
 	// create an injection graph containing the mocked elements we wish to replace
 
 	var g inject.Graph
 
-	healthStatsDMock = &mocks.MockStatsD{}
+	healthStatsDMock = &logging.MockStatsD{}
 	HealthDependencies = &HealthDependenciesContainer{}
 
 	err := g.Provide(

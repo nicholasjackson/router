@@ -3,26 +3,27 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"testing"
-	"log"
 	"os"
+	"testing"
+
 	"github.com/facebookgo/inject"
 	"github.com/gorilla/context"
+	"github.com/nicholasjackson/router/logging"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/nicholasjackson/router/mocks"
 )
 
-var echoStatsDMock *mocks.MockStatsD
+var echoStatsDMock *logging.MockStatsD
 
 func echoTestSetup(t *testing.T) {
 	// create an injection graph containing the mocked elements we wish to replace
 
 	var g inject.Graph
 
-	echoStatsDMock = &mocks.MockStatsD{}
+	echoStatsDMock = &logging.MockStatsD{}
 	EchoDependencies = &EchoDependenciesContainer{}
 
 	err := g.Provide(
