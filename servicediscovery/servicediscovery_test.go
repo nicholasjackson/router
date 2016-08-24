@@ -64,16 +64,41 @@ func Test_NewServiceDiscovery_returns_valid_instance(t *testing.T) {
 	assert.Equal(t, discovery.statsd, &mockStatsD)
 }
 
-func Test_NewServiceDiscovery_polls_for_changes(t *testing.T) {
+func Test_NewServiceDiscovery_sets_up_polling_interval(t *testing.T) {
 	setupSDTests()
 	discovery.StartPolling()
 
+	assert.Equal(t, discovery.refreshInterval, mockTimer.Duration)
+}
+
+func Test_NewServiceDiscovery_sets_up_polling_callback(t *testing.T) {
+	setupSDTests()
+	discovery.StartPolling()
+
+	assert.NotNil(t, mockTimer.Func)
+}
+
+func Test_NewServiceDiscovery_polls_for_changes(t *testing.T) {
+	setupSDTests()
+	discovery.StartPolling()
+	mockTimer.Func()
+
 	mockBackend.AssertNumberOfCalls(t, "Services", 1)
+}
+
+func Test_NewServiceDiscovery_polls_for_changes_at_30s_interval(t *testing.T) {
+	setupSDTests()
+	discovery.StartPolling()
+	mockTimer.Func()
+	mockTimer.Func()
+
+	mockBackend.AssertNumberOfCalls(t, "Services", 2)
 }
 
 func Test_NewServiceDiscovery_polling_success_calls_StatsD(t *testing.T) {
 	setupSDTests()
 	discovery.StartPolling()
+	mockTimer.Func()
 
 	mockStatsD.AssertCalled(t, "Increment", pollingBackendSuccess)
 }
@@ -83,6 +108,7 @@ func Test_NewServiceDiscovery_polling_error_calls_StatsD(t *testing.T) {
 	backendError = fmt.Errorf("Unable to reach server")
 
 	discovery.StartPolling()
+	mockTimer.Func()
 
 	mockStatsD.AssertCalled(t, "Increment", pollingBackendError)
 }
@@ -90,6 +116,8 @@ func Test_NewServiceDiscovery_polling_error_calls_StatsD(t *testing.T) {
 func Test_ServiceDiscovery_returns_services_with_correct_tag(t *testing.T) {
 	setupSDTests()
 	discovery.StartPolling()
+	mockTimer.Func()
+
 	services := discovery.ServicesByTag("TestService1", "project1")
 
 	assert.Equal(t, len(services), 1)
@@ -98,6 +126,8 @@ func Test_ServiceDiscovery_returns_services_with_correct_tag(t *testing.T) {
 func Test_ServiceDiscovery_returns_empty_when_service_not_exist(t *testing.T) {
 	setupSDTests()
 	discovery.StartPolling()
+	mockTimer.Func()
+
 	services := discovery.ServicesByTag("TestService3", "project1")
 
 	assert.Equal(t, len(services), 0)
@@ -106,6 +136,7 @@ func Test_ServiceDiscovery_returns_empty_when_service_not_exist(t *testing.T) {
 func Test_ServiceDiscovery_returns_empty_when_project_not_exist(t *testing.T) {
 	setupSDTests()
 	discovery.StartPolling()
+	mockTimer.Func()
 	services := discovery.ServicesByTag("TestService1", "project3")
 
 	assert.Equal(t, len(services), 0)

@@ -61,15 +61,21 @@ func NewServiceDiscovery(backend Backend, timer utils.Timer, statsd logging.Stat
 
 // StartPolling starts to poll the backend for changes
 func (s *ServiceDiscovery) StartPolling() {
-	var err error
-	s.backendServices, err = s.backend.Services()
+	go s.internalPolling()
+	time.Sleep(100 * time.Millisecond)
+}
 
-	if err != nil {
-		s.statsd.Increment(pollingBackendError)
-	} else {
-		s.statsd.Increment(pollingBackendSuccess)
-	}
+func (s *ServiceDiscovery) internalPolling() {
+	s.timer.AfterFunc(s.refreshInterval, func() {
+		var err error
+		s.backendServices, err = s.backend.Services()
 
+		if err != nil {
+			s.statsd.Increment(pollingBackendError)
+		} else {
+			s.statsd.Increment(pollingBackendSuccess)
+		}
+	})
 }
 
 //ServicesByTag returns an array of Service for the given service name and tag

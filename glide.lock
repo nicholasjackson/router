@@ -1,0 +1,59 @@
+hash: 9e15e6ebb431ecaabf935a263448af8bd359ee1b58b61354c3ab5f3d3c474d99
+updated: 2016-08-24T20:23:44.814865252+01:00
+imports:
+- name: github.com/alexcesaro/statsd
+  version: 7fea3f0d2fab1ad973e641e51dba45443a311a90
+- name: github.com/asaskevich/govalidator
+  version: 7664702784775e51966f0885f5cd27435916517b
+- name: github.com/davecgh/go-spew
+  version: 6cf5744a041a0022271cefed95ba843f6d87fd51
+  subpackages:
+  - spew
+- name: github.com/facebookgo/inject
+  version: 643b7206b487b04fbea325cf6e8d06a66f8db772
+- name: github.com/facebookgo/structtag
+  version: 217e25fb96916cc60332e399c9aa63f5c422ceed
+- name: github.com/gorilla/context
+  version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
+- name: github.com/gorilla/mux
+  version: 674ef1c28022f33fa7200f59db45e604557f0380
+- name: github.com/gorilla/pat
+  version: cf955c3d1f2c27ee96f93e9738085c762ff5f49d
+- name: github.com/hashicorp/consul
+  version: 0047f09be55fdf790263cbc088bf5ec924ffe644
+  subpackages:
+  - api
+- name: github.com/hashicorp/go-cleanhttp
+  version: ad28ea4487f05916463e2423a55166280e8254b5
+- name: github.com/hashicorp/serf
+  version: 9432bc08aa8d486e497e27f84878ebbe8c1eab66
+  subpackages:
+  - coordinate
+- name: github.com/pmezard/go-difflib
+  version: 792786c7400a136282c1664665ae0a8db921c6c2
+  subpackages:
+  - difflib
+- name: github.com/stretchr/objx
+  version: 1a9d0bb9f541897e62256577b352fdbc1fb4fd94
+- name: github.com/stretchr/testify
+  version: f390dcf405f7b83c997eac1b06768bb9f44dec18
+  subpackages:
+  - assert
+  - mock
+testImports:
+- name: github.com/alecthomas/assert
+  version: 5c23cad1f9b95ff384d7a741c3896a404aec4e7b
+- name: github.com/alecthomas/colour
+  version: 60882d9e27213e8552dcff6328914fe4c2b44bc9
+- name: github.com/alecthomas/repr
+  version: f010939cadb8dfd81374f1a42f2f030d82602eb7
+- name: github.com/mattn/go-isatty
+  version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
+- name: github.com/sergi/go-diff
+  version: ec7fdbb58eb3e300c8595ad5ac74a5aa50019cc7
+  subpackages:
+  - diffmatchpatch
+- name: golang.org/x/sys
+  version: a646d33e2ee3172a661fc09bca23bb4889a41bc8
+  subpackages:
+  - unix
