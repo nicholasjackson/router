@@ -12,7 +12,7 @@ const (
 	pollingBackendError   string = "servicerouter.Backend.Polling.Error"
 )
 
-// Service represents a backend service which is registered with the dynamci service registry
+// Service represents a backend service which is registered with the dynamic service registry
 type Service struct {
 	Node           string
 	Address        string

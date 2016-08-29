@@ -7,4 +7,4 @@ machine:
     SSL_KEY_PATH: /home/ubuntu/.ssh
 test:
   override:
-    - cd _build && ./minke.sh rake app:build_image && ./minke.sh rake app:cucumber 
+    - cd _build && ./minke build_image && ./minke.sh cucumber 

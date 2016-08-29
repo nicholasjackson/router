@@ -28,3 +28,6 @@ services:
     command: '-t udp'
     environment:
       - "SERVICE_514_NAME=syslog-514"
+network:
+  external:
+    name: ${DOCKER_NETWORK}

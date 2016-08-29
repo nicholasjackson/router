@@ -1,5 +1,5 @@
 hash: 9e15e6ebb431ecaabf935a263448af8bd359ee1b58b61354c3ab5f3d3c474d99
-updated: 2016-08-24T20:23:44.814865252+01:00
+updated: 2016-08-28T10:41:41.090519923Z
 imports:
 - name: github.com/alexcesaro/statsd
   version: 7fea3f0d2fab1ad973e641e51dba45443a311a90

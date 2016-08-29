@@ -1,11 +1,14 @@
 #!/bin/bash
-MINKE_VERSION="1.12.9"
-ERROR="Please specify a command e.g. ./minke.sh rake app:test"
+MINKE_VERSION="1.13.7"
+ERROR="Please specify a command e.g. ./minke build"
 
 DOCKER_SOCK="/var/run/docker.sock:/var/run/docker.sock"
 NEW_UUID=$(base64 /dev/urandom | tr -d '/+' | head -c 32 | tr '[:upper:]' '[:lower:]')
 
-GEMSET=$(<.ruby-gemset)
+if [ -f .ruby-gemset ];then
+  GEMSET=$(<.ruby-gemset)
+fi
+
 LEN=$(echo ${#GEMSET})
 
 if [ $LEN -lt 1 ]; then
@@ -28,16 +31,17 @@ COMMAND=$*
 # Test if interactive terminal and set the flag
 [[ -t 1 ]] && IT="-it" || IT=""
 
-if [[ $1 == \ -g* ]]; then
+if [[ $1 == \generate* ]]; then
   echo "Generating new template"
   DIR=${PWD}
   DOCKER_RUN="docker run --rm -v ${DOCKER_SOCK} -v ${DIR}:${DIR} -v ${DIR}/_build/vendor/gems:${GEMSETFOLDER} -e DOCKER_NETWORK=minke_${NEW_UUID} -w ${DIR} ${DOCKER_IMAGE} /bin/bash -c '${RVM_COMMAND} && bundle install && minke ${COMMAND}'"
+  
   eval "${DOCKER_RUN}"
 fi
 
-if [[ $1 != \ -g* ]]; then
+if [[ $1 != \generate* ]]; then
   DIR=$(dirname `pwd`)
-  DOCKER_RUN="docker run --rm ${IT} --net=minke_${NEW_UUID} -v ${DOCKER_SOCK} -v ${DIR}:${DIR} -v ${DIR}/_build/vendor/gems:${GEMSETFOLDER} -e DOCKER_NETWORK=minke_${NEW_UUID} -w ${DIR}/_build ${DOCKER_IMAGE} /bin/bash -c '${RVM_COMMAND} && ${COMMAND}'"
+  DOCKER_RUN="docker run --rm ${IT} --net=minke_${NEW_UUID} -v ${DOCKER_SOCK} -v ${DIR}:${DIR} -v ${DIR}/_build/vendor/gems:${GEMSETFOLDER} -e DOCKER_NETWORK=minke_${NEW_UUID} -w ${DIR}/_build ${DOCKER_IMAGE} /bin/bash -c '${RVM_COMMAND} && minke ${COMMAND}'"
 
   echo "Running command: ${COMMAND}"
 
